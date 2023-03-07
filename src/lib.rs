@@ -1,4 +1,4 @@
-//! # owo_farver
+//! # owo_print
 extern crate owo_colors;
 #[allow(unused_imports)]
 use owo_colors::OwoColorize;
@@ -10,7 +10,7 @@ use owo_colors::OwoColorize;
 /// # Examples
 /// ```
 /// use owo_colors::OwoColorize;
-/// use owo_farver::brace;
+/// use owo_print::brace;
 ///
 /// let i0 = brace!("INFO");
 /// ```
@@ -44,7 +44,7 @@ macro_rules! brace {
 /// # Examples
 /// ```
 /// use owo_colors::OwoColorize;
-/// use owo_farver::prettyln;
+/// use owo_print::prettyln;
 ///
 /// prettyln!("info", "The weather is nice today.");
 /// prettyln!("warn".yellow(), "I almost couldn't, but I did it!");
@@ -52,13 +52,13 @@ macro_rules! brace {
 #[macro_export]
 macro_rules! prettyln {
     ($level:expr, $msg:expr, $brace_color:expr) => {
-        println!("{} {}", owo_farver::brace!($level, $brace_color), $msg)
+        println!("{} {}", owo_print::brace!($level, $brace_color), $msg)
     };
     ($level:expr, $msg:expr) => {
-        println!("{} {}", owo_farver::brace!($level), $msg)
+        println!("{} {}", owo_print::brace!($level), $msg)
     };
     ($level:expr) => {
-        println!("{} {}", owo_farver::brace!($level))
+        println!("{} {}", owo_print::brace!($level))
     };
 }
 
@@ -80,7 +80,7 @@ macro_rules! eprettyln {
 /// # Examples
 /// ```
 /// use owo_colors::OwoColorize;
-/// use owo_farver::farve;
+/// use owo_print::farve;
 ///
 /// farve!(silly, "silly 😋".white().bold());
 /// farve!(info);
@@ -102,17 +102,17 @@ macro_rules! eprettyln {
 macro_rules! farve {
     ($func:ident, $prefix:expr, $brace_color:expr) => {
         pub fn $func<S: std::fmt::Display>(msg: S) {
-            owo_farver::prettyln!($prefix, msg, $brace_color)
+            owo_print::prettyln!($prefix, msg, $brace_color)
         }
     };
     ($func:ident, $prefix:expr) => {
         pub fn $func<S: std::fmt::Display>(msg: S) {
-            owo_farver::prettyln!($prefix, msg)
+            owo_print::prettyln!($prefix, msg)
         }
     };
     ($func:ident) => {
         pub fn $func<S: std::fmt::Display>(msg: S) {
-            owo_farver::prettyln!(stringify!($func), msg)
+            owo_print::prettyln!(stringify!($func), msg)
         }
     };
 }

@@ -1,5 +1,5 @@
 use owo_colors::OwoColorize;
-use owo_farver::farve;
+use owo_print::farve;
 
 farve!(silly, "silly 😋".white().bold(), 2);
 farve!(debug, '🐛', 1);
