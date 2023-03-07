@@ -7,6 +7,9 @@ macro = true
 name = "farve"
 version = "0.1.0"
 edition = "2021"
+authors = ["Jacob Bergholtz <cuppachino.dev@gmail.com>"]
+description = "Tiny macros for owo-color'ful logging and printing"
+publish = true
 
 [dependencies]
 owo-colors = "3.5.0"
