@@ -1,10 +1,10 @@
 [lib]
-name = "owo_print"
+name = "farve"
 macro = true
 
 
 [package]
-name = "owo_print"
+name = "farve"
 version = "0.1.0"
 edition = "2021"
 
