@@ -1,0 +1,12 @@
+[lib]
+name = "owo_farver"
+macro = true
+
+
+[package]
+name = "owo_farver"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+owo-colors = "3.5.0"
