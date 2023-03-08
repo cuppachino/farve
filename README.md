@@ -1,5 +1,8 @@
 # Farve
 
+🔗[docs.rs](https://docs.rs/crate/farve/latest) 
+🔗[crates.io](https://crates.io/crates/farve)
+
 A bite-sized *`macro_rules!`* wrapper around [`owo-colors`](https://github.com/jam1garner/owo-colors) for public-facing CLI applications.
 
 ```rust
