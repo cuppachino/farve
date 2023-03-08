@@ -13,6 +13,7 @@ description = "Tiny macros for owo-color'ful logging and printing"
 repository = "https://github.com/cuppachino/farve"
 keywords = ["owo-colors",  "colors",  "logging", "levels", "macros"]
 categories = ["command-line-utilities", "development-tools", "command-line-interface", "gui"]
+include = ["src/**/*", "./examples/**/*"]
 
 [dependencies]
 owo-colors = "3.5.0"
