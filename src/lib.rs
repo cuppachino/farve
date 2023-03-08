@@ -1,4 +1,3 @@
-//! # farve
 extern crate owo_colors;
 
 /// Wraps a string on either side with square brackets.
