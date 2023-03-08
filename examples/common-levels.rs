@@ -1,13 +1,12 @@
-use farve::farve;
+use farve::{efarve, farve};
 use owo_colors::OwoColorize;
 
 farve!(silly, "silly 😋".white().bold(), 2);
-farve!(debug, '🐛', 1);
+farve!(debug, '🐛', 0);
+farve!(info, "info".blue(), 1);
 
-farve!(info, "info".blue(), 2);
-
-farve!(warn, "WARN".bright_yellow(), 1);
-farve!(error, "ERROR".bright_red().underline(), 0);
+efarve!(warn, "WARN".bright_yellow(), 2);
+efarve!(error, "ERROR".bright_red().underline(), 0);
 
 fn main() {
     silly("Hello, world!");

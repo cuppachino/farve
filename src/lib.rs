@@ -1,27 +1,26 @@
 //! # farve
 extern crate owo_colors;
-#[allow(unused_imports)]
-use owo_colors::OwoColorize;
 
-// pub mod farve {
-/// Pad a string with bold-white square brackets
+/// Wraps a string on either side with square brackets.
+/// The brightness of the brackets can be set with the second argument (0-2).
+///
 /// `( "s" , 0 | 1 | 2 | _ ) -> "[s]"`
 ///
 /// # Examples
 /// ```
 /// use owo_colors::OwoColorize;
-/// use farve::brace;
+/// use farve::brackets;
 ///
-/// let i0 = brace!("INFO");
+/// let i0 = brackets!("INFO");
 /// ```
 #[macro_export]
-macro_rules! brace {
+macro_rules! brackets {
     ($msg:expr) => {
         format!("{}{}{}", '[', $msg, ']')
     };
 
-    ($level:expr, $brace_color:expr) => {
-        match $brace_color {
+    ($level:expr, $bracket_brightness:expr) => {
+        match $bracket_brightness {
             0 => format!(
                 "{}{}{}",
                 '['.black().dimmed().bold(),
@@ -40,7 +39,11 @@ macro_rules! brace {
     };
 }
 
-/// Println to stdout with braces
+/// Create a new println function with a prefix and brackets (0-2 brightness).
+///
+/// `level` - any prefix.
+/// `msg` - it should not be wrapped in quotes.
+/// `bracket_brightness` - the brightness of the brackets (default: 0).
 /// # Examples
 /// ```
 /// use owo_colors::OwoColorize;
@@ -51,46 +54,54 @@ macro_rules! brace {
 /// ```
 #[macro_export]
 macro_rules! prettyln {
-    ($level:expr, $msg:expr, $brace_color:expr) => {
-        println!("{} {}", farve::brace!($level, $brace_color), $msg)
+    ($level:expr, $msg:expr, $bracket_brightness:expr) => {
+        println!("{} {}", farve::brackets!($level, $bracket_brightness), $msg)
     };
     ($level:expr, $msg:expr) => {
-        println!("{} {}", farve::brace!($level), $msg)
+        println!("{} {}", farve::brackets!($level), $msg)
     };
     ($level:expr) => {
-        println!("{} {}", farve::brace!($level))
+        println!("{} {}", farve::brackets!($level))
     };
 }
 
-/// Eprintln to stderr with braces
+/// Create a new eprintln function with a prefix and brackets (0-2 brightness).
+///
+/// The first argument is the name of the function, it should not be wrapped in quotes.
+/// The second argument is the prefix, it should be wrapped in quotes (default: function name).
+/// The third argument is the brightness of the brackets (default: 0).
 #[macro_export]
 macro_rules! eprettyln {
-    ($level:expr, $msg:expr, $brace_color:expr) => {
-        eprintln!("{} {}", brace!($level, $brace_color), $msg)
+    ($level:expr, $msg:expr, $bracket_brightness:expr) => {
+        eprintln!("{} {}", farve::brackets!($level, $bracket_brightness), $msg)
     };
     ($level:expr, $msg:expr) => {
-        eprintln!("{} {}", brace!($level), $msg)
+        eprintln!("{} {}", farve::brackets!($level), $msg)
     };
     ($level:expr) => {
-        eprintln!("{} {}", brace!($level))
+        eprintln!("{} {}", farve::brackets!($level))
     };
 }
 
-/// Create a new function with a custom name and prefix.
+/// Create a new println function with a prefix and brackets (0-2 brightness).
+///
+/// `$func` - the name of the function, it should not be wrapped in quotes.
+/// `$prefix` - the prefix, it should be wrapped in quotes (default: function name).
+/// `$bracket_brightness` - `0 | 1 | 2`; brightness of the brackets (default: 0).
+///
 /// # Examples
 /// ```
 /// use owo_colors::OwoColorize;
 /// use farve::farve;
 ///
-/// farve!(silly, "silly 😋".white().bold());
+/// farve!(silly, "silly 😋".white().bold(), 2);
 /// farve!(info);
 /// farve!(warn, "warn".yellow().underline());
 ///
-/// fn main() {
-///   silly("Hello, world!");
-///   info("The weather is nice today.");
-///   warn("I almost couldn't, but I did it!");
-/// }
+///
+/// silly("Hello, world!");
+/// info("The weather is nice today.");
+/// warn("I almost couldn't, but I did it!");
 /// ```
 /// # Output (imagine color)
 /// ```log
@@ -100,9 +111,9 @@ macro_rules! eprettyln {
 /// ```
 #[macro_export]
 macro_rules! farve {
-    ($func:ident, $prefix:expr, $brace_color:expr) => {
+    ($func:ident, $prefix:expr, $bracket_brightness:expr) => {
         pub fn $func<S: std::fmt::Display>(msg: S) {
-            farve::prettyln!($prefix, msg, $brace_color)
+            farve::prettyln!($prefix, msg, $bracket_brightness)
         }
     };
     ($func:ident, $prefix:expr) => {
@@ -116,22 +127,34 @@ macro_rules! farve {
         }
     };
 }
-/// Just like `farve!`, but prints to stderr instead of stdout.
+/// Just like `farve!`, but prints to stderr instead of stdout. Creates an eprintln with a prefix and brackets (0-2 brightness).
+///
+/// `$func` - the name of the function, it should not be wrapped in quotes.
+/// `$prefix` - the prefix, it should be wrapped in quotes (default: function name).
+/// `$bracket_brightness` - `0 | 1 | 2`; brightness of the brackets (default: 0).
+///
+/// # Examples
+/// ```
+/// use owo_colors::OwoColorize;
+/// use farve::efarve;
+///
+/// efarve!(warn, "WARN".yellow().underline(), 1);
+/// efarve!(skip, "skip".bright_black().italic());
 #[macro_export]
 macro_rules! efarve {
-    ($func:ident, $prefix:expr, $brace_color:expr) => {
+    ($func:ident, $prefix:expr, $bracket_brightness:expr) => {
         pub fn $func<S: std::fmt::Display>(msg: S) {
-            eprettyln!($prefix, msg, $brace_color)
+            farve::eprettyln!($prefix, msg, $bracket_brightness)
         }
     };
     ($func:ident, $prefix:expr) => {
         pub fn $func<S: std::fmt::Display>(msg: S) {
-            eprettyln!($prefix, msg)
+            farve::eprettyln!($prefix, msg)
         }
     };
     ($func:ident) => {
         pub fn $func<S: std::fmt::Display>(msg: S) {
-            eprettyln!(stringify!($func), msg)
+            farve::eprettyln!(stringify!($func), msg)
         }
     };
 }
