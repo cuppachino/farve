@@ -11,7 +11,7 @@ license = "GPL-3.0 OR Apache-2.0"
 authors = ["Jacob Bergholtz <cuppachino.dev@gmail.com>"]
 description = "Tiny macros for owo-color'ful logging and printing"
 repository = "https://github.com/cuppachino/farve"
-keywords = ["owo-colors", "owo", "colors", "prefix", "logging", "levels", "print", "macros", "macro_rules"]
+keywords = ["owo-colors",  "colors",  "logging", "levels", "macros"]
 categories = ["command-line-utilities", "development-tools", "logging", "style"]
 
 [dependencies]
